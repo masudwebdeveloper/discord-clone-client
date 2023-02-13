@@ -2,8 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  @apply 
+@layer components {
+  .link {
+    @apply font-semibold hover:underline cursor-pointer
+  }
 }
 
 *{
