@@ -1,15 +1,16 @@
 import { ChevronDownIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 import Channel from "../Channel/Channel";
 import ServerIcon from "../ServerIcon/ServerIcon";
 
 const Home = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  console.log(user);
   if (!user) {
     navigate("/");
   }
@@ -53,6 +54,14 @@ const Home = () => {
     },
   });
 
+  const handleSignOut = () => {
+    logOut()
+      .then(() => {
+        // window.location.reload();
+      })
+      .catch((err) => console.error(err.message));
+  };
+
   if (loading || isLoading) {
     return (
       <h1 className="flex items-center justify-center h-screen">loading...</h1>
@@ -61,7 +70,7 @@ const Home = () => {
   if (error) {
     return "an error has occurred: " + error.message;
   }
-  console.log(channels);
+  // console.log(channels);
   return (
     <div className="flex h-screen">
       <div className="flex flex-col space-y-3 bg-discord_serversBg min-w-max p-3">
@@ -95,10 +104,24 @@ const Home = () => {
               onClick={handleAddChannel}
             />
           </div>
-          <div className="flex flex-col space-y-2 px-2 mb-4">
+          <div className="flex flex-col space-y-2 mb-4">
             {channels.map((channel) => (
               <Channel key={channel._id} channel={channel} />
             ))}
+          </div>
+        </div>
+        <div>
+          <div>
+            <img
+              src={user?.photoURL}
+              alt={user?.photoURL}
+              className="h-10 rounded-full cursor-pointer"
+              onClick={handleSignOut}
+            />
+            <h4 className="text-white text-xs font-medium ">
+              {user?.displayName}
+              <span></span>
+            </h4>
           </div>
         </div>
       </div>

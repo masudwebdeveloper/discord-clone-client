@@ -13,8 +13,9 @@ module.exports = {
         discord_channelsBg: "#2f3136",
         discord_serverNameBg: "#34373c",
         discord_channel: "#8e9297",
+        discord_channelHoverBg: "#3e3c43",
       },
     },
   },
-  plugins: [require('tailwind-scrollbar-hide')],
+  plugins: [require("tailwind-scrollbar-hide")],
 };
