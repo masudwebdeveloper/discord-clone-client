@@ -1,10 +1,16 @@
 import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
-import React from "react";
+import React, { useState } from "react";
 import heroPhotoOne from "../../assets/images/hero-photo-one.svg";
 import heroPhotoTwo from "../../assets/images/hero-photo-two.svg";
 import heroPhotoThree from "../../assets/images/hero-photo-three.svg";
 
 const Hero = () => {
+  const [count, setCount] = useState(0);
+  const increase = ()=>{
+    for(let i = 0; i < 5; i ++){
+      setCount(count + 1)
+    }
+  }
   return (
     <div className="bg-discord_blue pb-8 md:pb-0">
       <div
@@ -38,6 +44,12 @@ const Hero = () => {
             className="absolute -left-20 mt-16 sm:-left-44 md:hidden inline-block"
           />
           <img src={heroPhotoOne} alt="" className="hidden md:block" />
+        </div>
+      </div>
+      <div>
+        <p>{count}</p>
+        <div onClick={increase}>
+          increase
         </div>
       </div>
     </div>
