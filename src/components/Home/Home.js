@@ -1,16 +1,23 @@
-import { ChevronDownIcon, PlusIcon } from "@heroicons/react/24/outline";
+import {
+  ChevronDownIcon,
+  CogIcon,
+  MicrophoneIcon,
+  PhoneIcon,
+  PlusIcon,
+} from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 import Channel from "../Channel/Channel";
+import Chat from "../Chat/Chat";
 import ServerIcon from "../ServerIcon/ServerIcon";
 
 const Home = () => {
   const { user, logOut } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  console.log(user);
+  // console.log(user);
   if (!user) {
     navigate("/");
   }
@@ -61,6 +68,7 @@ const Home = () => {
       })
       .catch((err) => console.error(err.message));
   };
+  // console.log(user);
 
   if (loading || isLoading) {
     return (
@@ -110,8 +118,8 @@ const Home = () => {
             ))}
           </div>
         </div>
-        <div>
-          <div>
+        <div className="bg-discord_userSectionBg flex items-center justify-between space-x-8 p-2">
+          <div className="flex items-center space-x-1">
             <img
               src={user?.photoURL}
               alt={user?.photoURL}
@@ -120,10 +128,26 @@ const Home = () => {
             />
             <h4 className="text-white text-xs font-medium ">
               {user?.displayName}
-              <span></span>
+              <span className="text-discord_userSectionText block">
+                #{user?.uid.substring(0, 6)}
+              </span>
             </h4>
           </div>
+          <div className="text-gray-400 flex items-center">
+            <div className="hover:bg-discord_iconHoverBg p-2 rounded-md">
+              <MicrophoneIcon className="h-5 icon" />
+            </div>
+            <div className="hover:bg-discord_iconHoverBg p-2 rounded-md">
+              <PhoneIcon className="h-5 icon" />
+            </div>
+            <div className="hover:bg-discord_iconHoverBg p-2 rounded-md">
+              <CogIcon className="h-5 icon" />
+            </div>
+          </div>
         </div>
+      </div>
+      <div className="bg-discord_chatBg grow">
+        <Chat />
       </div>
     </div>
   );
