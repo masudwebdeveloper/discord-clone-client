@@ -122,7 +122,7 @@ const Home = () => {
           <div className="flex items-center space-x-1">
             <img
               src={user?.photoURL}
-              alt={user?.photoURL}
+              alt=""
               className="h-10 rounded-full cursor-pointer"
               onClick={handleSignOut}
             />

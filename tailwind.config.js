@@ -22,6 +22,8 @@ module.exports = {
         discord_chatHeader: "#72767d",
         discord_chatHeaderInputBg: "#202225",
         discord_chatInputBg: "#40444b",
+        discord_chatInputText: "#dcddde",
+        discord_chatInput: "#72767d",
       },
     },
   },
