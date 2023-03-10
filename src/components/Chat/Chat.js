@@ -10,6 +10,7 @@ import {
   QuestionMarkCircleIcon,
   UsersIcon,
 } from "@heroicons/react/24/solid";
+import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useRef } from "react";
 import { useSelector } from "react-redux";
 import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
@@ -17,51 +18,81 @@ import {
   selectChannelId,
   selectChannelName,
 } from "../../features/channelSlice";
+import Message from "../../Message/Message";
 // import {firebase} from "firebase";
+// import time from "../../utils/utils";
 
 const Chat = () => {
   const channelId = useSelector(selectChannelId);
   const channelName = useSelector(selectChannelName);
   const { user } = useContext(AuthContext);
   const inputRef = useRef("");
-
+  const chatRef = useRef(null);
+  console.log(channelId, channelName);
+  const { data: messages = [], refetch } = useQuery({
+    queryKey: [channelId],
+    queryFn: async () => {
+      const res = await fetch(
+        `http://localhost:5000/messages/${channelId}`
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
+  console.log(messages);
   function getTime(date) {
     var hours = date.getHours();
     var minutes = date.getMinutes();
-    var ampm = hours >= 12 ? 'pm' : 'am';
+    var ampm = hours >= 12 ? "pm" : "am";
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0'+minutes : minutes;
-    var strTime = hours + ':' + minutes + ' ' + ampm;
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    var strTime = hours + ":" + minutes + " " + ampm;
     return strTime;
   }
 
-  const time = getTime(new Date())
-  // console.log(time);
-  var aDay = 24 * 60 * 60 * 1000;
-console.log(aDay);
-  
-  const date_time = new Date().toTimeString();
+  const time = getTime(new Date());
+
+  const date = new Date().toDateString();
+
+  const scrollToBottom = () => {
+    chatRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
   const sendMessage = (e) => {
     e.preventDefault();
     if (inputRef.current.value !== "") {
       const messageData = {
         channelId,
         channelName,
+        messageDate: date,
+        messageTime: time,
         message: inputRef.current.value,
         name: user?.displayName,
         photoURL: user?.photoURL,
         email: user?.email,
       };
       // console.log(messageData);
-      // fetch("http://localhost:5000/message",{
-      //   method: "post",
-      //   headers: {
-      //     "content-type": "application/json"
-      //   },
-      //   body: JSON.stringify(message)
-      // })
+      fetch("http://localhost:5000/message", {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(messageData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.acknowledged) {
+            refetch();
+          }
+        })
+        .catch((err) => console.error(err.message));
     }
+    inputRef.current.value = "";
+    scrollToBottom();
   };
   // console.log(channelId, channelName);
   return (
@@ -87,7 +118,12 @@ console.log(aDay);
           <QuestionMarkCircleIcon className="icon" />
         </div>
       </header>
-      <main className="grow overflow-y-scroll scrollbar-hide"></main>
+      <main className="grow overflow-y-scroll scrollbar-hide">
+        {messages?.map((messageDoc) => (
+          <Message messageDoc={messageDoc} />
+        ))}
+        <div ref={chatRef} className="pb-16" />
+      </main>
       <div className="flex items-center p-2.5 bg-discord_chatInputBg mx-5 mb-7 rounded-lg">
         <PlusCircleIcon className="icon mr-4" />
         <form action="" className="grow">
