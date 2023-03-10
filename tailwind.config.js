@@ -25,6 +25,8 @@ module.exports = {
         discord_chatInputText: "#dcddde",
         discord_chatInput: "#72767d",
         discord_messageBg: "#32353b",
+        discord_messageTimesTamp: "#72767d",
+        discord_message: "#dcddde",
       },
     },
   },

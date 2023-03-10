@@ -28,7 +28,7 @@ const Chat = () => {
   const { user } = useContext(AuthContext);
   const inputRef = useRef("");
   const chatRef = useRef(null);
-  console.log(channelId, channelName);
+  // console.log(channelId, channelName);
   const { data: messages = [], refetch } = useQuery({
     queryKey: [channelId],
     queryFn: async () => {
@@ -39,7 +39,7 @@ const Chat = () => {
       return data;
     },
   });
-  console.log(messages);
+  // console.log(messages);
   function getTime(date) {
     var hours = date.getHours();
     var minutes = date.getMinutes();

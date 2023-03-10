@@ -17,7 +17,7 @@ const Home = () => {
   const { user, logOut } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  // console.log(user);
+  console.log(user);
   if (!user) {
     navigate("/");
   }
