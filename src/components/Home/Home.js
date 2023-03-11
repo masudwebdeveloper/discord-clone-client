@@ -27,7 +27,7 @@ const Home = () => {
     const channelName = prompt("Enter a new channel name");
     if (channelName) {
       setLoading(true);
-      fetch("http://localhost:5000/channels", {
+      fetch("https://discord-server.vercel.app/channels", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -55,7 +55,7 @@ const Home = () => {
   } = useQuery({
     queryKey: ["channels"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/channels");
+      const res = await fetch("https://discord-server.vercel.app/channels");
       const data = res.json();
       return data;
     },

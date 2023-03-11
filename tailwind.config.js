@@ -27,6 +27,7 @@ module.exports = {
         discord_messageBg: "#32353b",
         discord_messageTimesTamp: "#72767d",
         discord_message: "#dcddde",
+        discord_deleteIcon: "#ed4245",
       },
     },
   },

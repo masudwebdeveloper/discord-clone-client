@@ -33,7 +33,7 @@ const Chat = () => {
     queryKey: [channelId],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/messages/${channelId}`
+        `https://discord-server.vercel.app/messages/${channelId}`
       );
       const data = await res.json();
       return data;
@@ -76,7 +76,7 @@ const Chat = () => {
         email: user?.email,
       };
       // console.log(messageData);
-      fetch("http://localhost:5000/message", {
+      fetch("https://discord-server.vercel.app/message", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -120,7 +120,11 @@ const Chat = () => {
       </header>
       <main className="grow overflow-y-scroll scrollbar-hide">
         {messages?.map((messageDoc) => (
-          <Message messageDoc={messageDoc} />
+          <Message
+            key={messageDoc._id}
+            refetch={refetch}
+            messageDoc={messageDoc}
+          />
         ))}
         <div ref={chatRef} className="pb-16" />
       </main>
