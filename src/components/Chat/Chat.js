@@ -94,7 +94,6 @@ const Chat = () => {
     inputRef.current.value = "";
     scrollToBottom();
   };
-  // console.log(channelId, channelName);
   return (
     <div className="flex flex-col h-screen">
       <header className="flex items-center justify-between space-x-5 border-b border-gray-800 p-4 -mt-1">

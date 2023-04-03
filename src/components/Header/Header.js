@@ -22,9 +22,9 @@ const Header = () => {
   const handleNavigate = () => {
     navigate("/channels");
   };
- if(isLoading){
-    return <h1>Loading...</h1>
- }
+//  if(isLoading){
+//     return <h1>Loading...</h1>
+//  }
   return (
     <header className="flex items-center justify-between py-4 px-6 bg-discord_blue">
       <a href="">
