@@ -61,6 +61,7 @@ const Chat = () => {
       block: "start",
     });
   };
+  //this is messege function
 
   const sendMessage = (e) => {
     e.preventDefault();
